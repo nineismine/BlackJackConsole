@@ -12,26 +12,27 @@ namespace Blackjack
 
         static void Main(string[] args)
         {
-      
-            StartGame();
-
+          StartGame();
         }
         static void StartGame()
         {
             dealerTotal = cardRandomizer.Next(15, 22);
             playerCards[0] = DealCard();
             playerCards[1] = DealCard();
-
+            DisplayWelcomeMessage();
             do
             {
-                Console.WriteLine("Welcome to Blackjack! You were dealt the cards : {0} and {1} ", playerCards[0], playerCards[1]);
-                Console.WriteLine("Your total is {0} ", total);
-                Console.WriteLine("Would you like to (H)it or (S)tay?") ;
+               Console.WriteLine("Would you like to (H)it or (S)tay?") ;
                 hitOrStay = Console.ReadLine().ToUpper();
             }
             while (!hitOrStay.Equals("H") && !hitOrStay.Equals("S"));
-
             StartGameLoop();
+        }
+
+        private static void DisplayWelcomeMessage()
+        {
+            Console.WriteLine("Welcome to Blackjack! You were dealt the cards : {0} and {1} ", playerCards[0], playerCards[1]);
+            Console.WriteLine("Your total is {0} ", total);
         }
 
         static void StartGameLoop()
@@ -59,54 +60,61 @@ namespace Blackjack
 
         static string DealCard()
         {
-            string Card = "";
+           
             int cards = cardRandomizer.Next(1, 14);
+            string Card = GetCardValue(cards);
+            return Card;
+        }
 
-            switch (cards)
-            {
-                case 1:
-                    Card = "Two"; total += 2;
-                    break;
-                case 2:
-                    Card = "Three"; total += 3;
-                    break;
-                case 3:
-                    Card = "Four"; total += 4;
-                    break;
-                case 4:
-                    Card = "Five"; total += 5;
-                    break;
-                case 5:
-                    Card = "Six"; total += 6;
-                    break;
-                case 6:
-                    Card = "Seven"; total += 7;
-                    break;
-                case 7:
-                    Card = "Eight"; total += 8;
-                    break;
-                case 8:
-                    Card = "Nine"; total += 9;
-                    break;
-                case 9:
-                    Card = "Ten"; total += 10;
-                    break;
-                case 10:
-                    Card = "Jack"; total += 10;
-                    break;
-                case 11:
-                    Card = "Queen"; total += 10;
-                    break;
-                case 12:
-                    Card = "King"; total += 10;
-                    break;
-                case 13:
-                    Card = "Ace"; total += 11;
-                    break;
-                default:
-                    Card = "2"; total += 2;
-                    break;
-            }
+        static string GetCardValue(int cards)
+        {
+            string Card;
+
+                    switch (cards)
+                    {
+                        case 1:
+                            Card = "Two"; total += 2;
+                            break;
+                        case 2:
+                            Card = "Three"; total += 3;
+                            break;
+                        case 3:
+                            Card = "Four"; total += 4;
+                            break;
+                        case 4:
+                            Card = "Five"; total += 5;
+                            break;
+                        case 5:
+                            Card = "Six"; total += 6;
+                            break;
+                        case 6:
+                            Card = "Seven"; total += 7;
+                            break;
+                        case 7:
+                            Card = "Eight"; total += 8;
+                            break;
+                        case 8:
+                            Card = "Nine"; total += 9;
+                            break;
+                        case 9:
+                            Card = "Ten"; total += 10;
+                            break;
+                        case 10:
+                            Card = "Jack"; total += 10;
+                            break;
+                        case 11:
+                            Card = "Queen"; total += 10;
+                            break;
+                        case 12:
+                            Card = "King"; total += 10;
+                            break;
+                        case 13:
+                            Card = "Ace"; total += 11;
+                            break;
+                        default:
+                            Card = "2"; total += 2;
+                            break;
+                    }
             return Card;
         }
 
