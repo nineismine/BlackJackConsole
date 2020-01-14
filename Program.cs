@@ -6,13 +6,18 @@ namespace Blackjack
     class Blackjack
     {
         static string[] playerCards = new string[11];
-        static string hitOrStay = "";
-        static int total = 0, count = 1, dealerTotal = 0;
+        static string playerChoice = "";
+        static int total = 0;
+        static int  count = 1; 
+        static int  dealerTotal = 0;
         static Random cardRandomizer = new Random();
 
         static void Main(string[] args)
         {
           StartGame();
+          StartGameLoop();
+          Console.WriteLine("Would you like to play again? (Y)es or (N)o?");
+           PlayAgain();
         }
         static void StartGame()
         {
@@ -23,10 +28,10 @@ namespace Blackjack
             do
             {
                Console.WriteLine("Would you like to (H)it or (S)tay?") ;
-                hitOrStay = Console.ReadLine().ToUpper();
+                playerChoice = Console.ReadLine().ToUpper();
             }
-            while (!hitOrStay.Equals("H") && !hitOrStay.Equals("S"));
-            StartGameLoop();
+            while (!playerChoice.Equals("H") && !playerChoice.Equals("S"));
+           
         }
 
         private static void DisplayWelcomeMessage()
@@ -37,30 +42,26 @@ namespace Blackjack
 
         static void StartGameLoop()
         {
-            if (hitOrStay.Equals("H"))
+            if (playerChoice.Equals("H"))
             {
                 Hit();
             }
-            else if (hitOrStay.Equals("S"))
+            else if (playerChoice.Equals("S"))
             {
                 if (total > dealerTotal && total <= 21)
                 {
                     Console.WriteLine("Congrats! You won the game! The dealer's total was {0} ", dealerTotal); 
-                    Console.WriteLine("Would you like to play again? y/n");
-                    PlayAgain();
                 }
                 else if (total < dealerTotal)
                 {
-                    Console.WriteLine("\nSorry, you lost! The dealer's total was " + dealerTotal + ".\nWould you like to play again? y/n");
-                    PlayAgain();
+                    Console.WriteLine("Sorry, you lost! The dealer's total was {0}", dealerTotal);
                 }
             }
-            Console.ReadLine();
+         // Console.ReadLine();
         }
 
         static string DealCard()
         {
-           
             int cards = cardRandomizer.Next(1, 14);
             string Card = GetCardValue(cards);
             return Card;
@@ -126,23 +127,28 @@ namespace Blackjack
 
             if (total.Equals(21))
             {
-                Console.WriteLine("You got Blackjack! The dealer's total was {0}. \nWould you like to play again? ", dealerTotal );
-                PlayAgain();
+                Console.WriteLine("You got Blackjack! The dealer's total was {0}. ", dealerTotal );
+                
+               
             }
             else if (total > 21)
             {
-                Console.WriteLine("\nYou busted!  Sorry!. The dealer's total was {0} .\nWould you like to play again? y/n",  dealerTotal );
-                PlayAgain();
+                Console.WriteLine("You busted!  Sorry!. The dealer's total was {0}",dealerTotal );
+               
             }
             else if (total < 21)
             {
                 do
                 {
-                    Console.WriteLine("\nWould you like to hit or stay? h for hit s for stay");
-                    hitOrStay = Console.ReadLine().ToUpper();
+                    Console.WriteLine("Would you like to hit or stay? h for hit s for stay");
+                    playerChoice = Console.ReadLine().ToUpper();
                 }
-                while (!hitOrStay.Equals("H") && !hitOrStay.Equals("S"));
-                StartGame();
+              while (!playerChoice.Equals("H") && !playerChoice.Equals("S"));
+                if (playerChoice.ToUpper() == "H")
+                {
+                    Hit();
+                }
+               
             }
         }
 
@@ -158,14 +164,14 @@ namespace Blackjack
 
             if (playAgain.Equals("Y"))
             {
-                Console.WriteLine("\nPress enter to restart the game!");
+                Console.WriteLine("Press enter to restart the game!");
                 Console.ReadLine();
                 Console.Clear();
                 dealerTotal = 0;
                 count = 1;
                 total = 0;
 
-                StartGameLoop();
+                StartGame();
             }
             else if (playAgain.Equals("N"))
             {
